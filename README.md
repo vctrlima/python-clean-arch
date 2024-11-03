@@ -43,8 +43,8 @@ cd python-clean-arch
 2. Create a virtual environment and activate it:
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+python -m venv .venv
+source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
 ```
 
 3. Install the dependencies:
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 4. Run the FastAPI application:
 
 ```bash
-uvicorn app.api.main:app --reload
+uvicorn src.__main__:api --reload
 ```
 
 ## Learning Objectives
