@@ -1,9 +1,7 @@
-from dataclasses import field
-from uuid import UUID
 from pydantic import BaseModel
 from src.domain.entities.user import User
 
-class UserDTO(BaseModel):
+class UserRequestDTO(BaseModel):
     name: str = ""
     email: str = ""
     password: str = ""
