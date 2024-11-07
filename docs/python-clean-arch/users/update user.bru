@@ -1,0 +1,24 @@
+meta {
+  name: update user
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{server}}/users/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: a00e150e-89ae-4985-a959-892f2ab1c09a
+}
+
+body:json {
+  {
+    "id": "a00e150e-89ae-4985-a959-892f2ab1c09a",
+    "name": "Victor Cardoso Lima",
+    "email": "victor.lima@email",
+    "password": "@Abc1234"
+  }
+}

@@ -1,13 +1,16 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, Body, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.domain.entities.user import User
 from src.domain.use_cases.create_user import CreateUser
-from src.domain.use_cases.get_user_by_id import GetUserById
 from src.domain.use_cases.get_all_users import GetAllUsers
+from src.domain.use_cases.get_user_by_id import GetUserById
+from src.domain.use_cases.update_user import UpdateUser
 from src.app.data_transfer_objects.user_request_dto import UserRequestDTO
 from src.app.services.create_user_service import CreateUserService
 from src.app.services.get_all_users_service import GetAllUsersService
 from src.app.services.get_user_by_id_service import GetUserByIdService
+from src.app.services.update_user_service import UpdateUserService
 from src.infra.persistence.adapters.db_connection import get_db
 
 router = APIRouter()
@@ -38,3 +41,14 @@ async def get_by_id(
     db: AsyncSession = Depends(get_db)
 ):
     return await get_user_by_id_use_case.get_by_id(id, db)
+
+@router.put("/users/{id}", status_code=status.HTTP_200_OK)
+async def update_user(
+    id: UUID,
+    user_dto: UserRequestDTO = Body(...),
+    update_user_use_case: UpdateUser = Depends(UpdateUserService),
+    db: AsyncSession = Depends(get_db)
+):
+    user_entity = user_dto.to_entity()
+    user_entity.id = id
+    return await update_user_use_case.update(user_entity, db)
