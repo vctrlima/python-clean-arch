@@ -60,3 +60,13 @@ class UserRepository(CreateUser, GetAllUsers, GetUserById):
         except Exception as e:
             self._logger.exception(e)
             return None
+
+    async def delete_by_id(self, id: UUID, db: AsyncSession) -> None:
+        try:
+            found_user = await db.get(UserModel, id)
+            if not found_user:
+                raise Exception("User with ID {id} not found!")
+            await db.delete(found_user)
+            await db.commit()
+        except Exception as e:
+            self._logger.exception(e)
