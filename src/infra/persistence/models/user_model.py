@@ -13,8 +13,8 @@ class UserModel(Base):
     email = Column(String, index=True, unique=True)
     password = Column(String, index=True)
 
-    def __init__(self, user: User):
+    def __init__(self, user: User, hashed_password: str):
         self.id = uuid.uuid4()
         self.name = user.name
         self.email = user.email
-        self.password = user.password
+        self.password = hashed_password

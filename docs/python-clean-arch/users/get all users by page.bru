@@ -1,0 +1,17 @@
+meta {
+  name: get all users by page
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{server}}/users?offset=0&limit=10&sort=%2Bname
+  body: none
+  auth: none
+}
+
+params:query {
+  offset: 0
+  limit: 10
+  sort: +name
+}

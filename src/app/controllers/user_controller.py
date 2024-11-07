@@ -1,10 +1,13 @@
+from uuid import UUID
 from fastapi import APIRouter, Depends, Body, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.domain.use_cases.create_user import CreateUser
-from src.domain.use_cases.get_users import GetUsers
+from src.domain.use_cases.get_user_by_id import GetUserById
+from src.domain.use_cases.get_all_users import GetAllUsers
 from src.app.data_transfer_objects.user_request_dto import UserRequestDTO
 from src.app.services.create_user_service import CreateUserService
-from src.app.services.get_users_service import GetUsersService
+from src.app.services.get_all_users_service import GetAllUsersService
+from src.app.services.get_user_by_id_service import GetUserByIdService
 from src.infra.persistence.adapters.db_connection import get_db
 
 router = APIRouter()
@@ -19,11 +22,19 @@ async def create_user(
     return await create_user_use_case.create(user_entity, db)
 
 @router.get("/users", status_code=status.HTTP_200_OK)
-async def get_users(
+async def get_all_users(
     offset: int = 0,
     limit: int = 10,
     sort: str = "+name",
-    get_users_use_case: GetUsers = Depends(GetUsersService),
+    get_all_users_use_case: GetAllUsers = Depends(GetAllUsersService),
     db: AsyncSession = Depends(get_db)
 ):
-    return await get_users_use_case.get(offset, limit, sort, db)
+    return await get_all_users_use_case.get_all(offset, limit, sort, db)
+
+@router.get("/users/{id}", status_code=status.HTTP_200_OK)
+async def get_by_id(
+    id: UUID,
+    get_user_by_id_use_case: GetUserById = Depends(GetUserByIdService),
+    db: AsyncSession = Depends(get_db)
+):
+    return await get_user_by_id_use_case.get_by_id(id, db)
