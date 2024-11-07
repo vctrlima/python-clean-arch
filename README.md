@@ -19,16 +19,15 @@ The goal of this project is to explore and implement DDD concepts and the Clean 
 
 ```plaintext
 python-clean-arch/
+├── docs/              # Ready API documentation to use with [Bruno](https://www.usebruno.com/)
+├── src/               # Application code
+│   ├── app/           # Presentation layer (e.g., HTTP routes, data transfer objects)
+│   ├── domain/        # Domain business logic (domain and application layers)
+│   ├── infra/         # Infrastructure layer (e.g., database, external services)
+│   └── tests/         # Unit tests
 │
-├── app/                 # Application code
-│   ├── api/             # FastAPI routes
-│   ├── core/            # Core business logic (domain and application layers)
-│   ├── infrastructure/  # Infrastructure layer (e.g., database, external services)
-│   └── tests/           # Unit and integration tests
-│
-├── requirements.txt     # Python dependencies
-├── README.md            # Project documentation
-└── .env                 # Environment variables
+├── requirements.txt   # Python dependencies
+└── README.md          # Base project documentation
 ```
 
 ## Installation
@@ -58,6 +57,44 @@ pip install -r requirements.txt
 ```bash
 uvicorn src.__main__:api --reload
 ```
+
+## Database Configuration
+
+To run the application with SQLAlchemy, you need to configure a database connection. The application uses PostgreSQL, and the connection string is defined in the `.env` file under the `DATABASE_URL` variable. 
+
+### Setting Up the `.env` File
+
+Create a `.env` file in the root of your project with the following content:
+
+```plaintext
+DATABASE_URL=postgresql+asyncpg://<username>:<password>@<host>:<port>/<database_name>
+```
+
+Replace `<username>`, `<password>`, `<host>`, `<port>`, and `<database_name>` with your PostgreSQL credentials. Here is an example configuration:
+
+```plaintext
+DATABASE_URL=postgresql+asyncpg://postgres:admin@localhost:5432/python-clean-arch
+```
+
+In this example:
+- `postgres` is the username.
+- `admin` is the password.
+- `localhost` is the host.
+- `5432` is the port.
+- `python-clean-arch` is the database name.
+
+### Creating the database
+
+Ensure that the PostgreSQL database specified in `DATABASE_URL` exists before running the application. You can create it manually with the following commands:
+
+1. Open a PostgreSQL shell or a database client.
+2. Run the following commands to create the database:
+
+   ```sql
+   CREATE DATABASE python-clean-arch;
+   ```
+
+Once the database is configured, you should be able to run the application as described in the installation steps.
 
 ## Learning Objectives
 
