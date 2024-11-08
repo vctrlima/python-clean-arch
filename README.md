@@ -84,7 +84,7 @@ In this example:
 - `5432` is the port.
 - `python-clean-arch` is the database name.
 
-### Creating the database
+### Creating the Database
 
 Ensure that the PostgreSQL database specified in `DATABASE_URL` exists before running the application. You can create it manually with the following commands:
 
