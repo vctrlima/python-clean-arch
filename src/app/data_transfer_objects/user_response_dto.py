@@ -1,6 +1,5 @@
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict
-from src.domain.entities.user import User
 
 class UserResponseDTO(BaseModel):
     id: UUID = None

@@ -3,5 +3,5 @@ from src.domain.entities.user import User
 
 class UpdateUser:
     @abstractmethod
-    async def update(user: User) -> User:
+    async def update(self, user: User) -> User:
         pass

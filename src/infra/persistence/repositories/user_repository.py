@@ -1,7 +1,7 @@
 import logging
+from typing import Callable
 from uuid import UUID
 from sqlalchemy import asc, desc, select, func
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.domain.entities.user import User
 from src.domain.use_cases.create_user import CreateUser
@@ -18,7 +18,7 @@ class UserRepository(CreateUser, GetAllUsers, GetUserById):
     
     async def create(self, user: User, db: AsyncSession) -> User:
         try:
-            new_user = UserModel(user, PasswordEncryption.encrypt(user.password))
+            new_user = UserModel(user, PasswordEncryption.encrypt(password=user.password))
             db.add(new_user)
             await db.commit()
             await db.refresh(new_user)
@@ -54,7 +54,7 @@ class UserRepository(CreateUser, GetAllUsers, GetUserById):
                 raise Exception("User with ID {user.id} not found!")
             updatable_user.name = user.name
             updatable_user.email = user.email
-            updatable_user.password = PasswordEncryption.encrypt(user.password)
+            updatable_user.password = PasswordEncryption.encrypt(password=user.password)
             await db.commit()
             return user
         except Exception as e:

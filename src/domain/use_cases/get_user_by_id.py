@@ -4,5 +4,5 @@ from src.domain.entities.user import User
 
 class GetUserById:
     @abstractmethod
-    async def get_by_id(id: UUID) -> User:
+    async def get_by_id(self, id: UUID) -> User:
         pass

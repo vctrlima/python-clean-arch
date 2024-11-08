@@ -1,7 +1,6 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, Body, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.domain.entities.user import User
 from src.domain.use_cases.create_user import CreateUser
 from src.domain.use_cases.get_all_users import GetAllUsers
 from src.domain.use_cases.get_user_by_id import GetUserById
