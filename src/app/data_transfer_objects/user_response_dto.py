@@ -1,6 +1,7 @@
 from uuid import UUID
 from pydantic import BaseModel, ConfigDict
 
+
 class UserResponseDTO(BaseModel):
     id: UUID = None
     name: str = ""

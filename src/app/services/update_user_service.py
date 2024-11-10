@@ -6,6 +6,7 @@ from app.data_transfer_objects.user_response_dto import UserResponseDTO
 from infra.persistence.adapters.db_connection import get_db
 from infra.persistence.repositories.user_repository import UserRepository
 
+
 class UpdateUserService(UpdateUser):
     def __init__(self, repository: UserRepository = Depends(UserRepository)):
         self.repository = repository

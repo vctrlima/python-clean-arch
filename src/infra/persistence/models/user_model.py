@@ -5,6 +5,7 @@ import uuid
 
 Base = declarative_base()
 
+
 class UserModel(Base):
     __tablename__ = "users"
 
