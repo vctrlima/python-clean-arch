@@ -20,7 +20,7 @@ The goal of this project is to explore and implement DDD concepts and the Clean 
 ```plaintext
 python-clean-arch/
 │
-├── docs/              # Ready API documentation to use with [Bruno]
+├── docs/              # Ready API documentation to use with [Insomnia]
 ├── src/               # Application code
 │   ├── app/           # Presentation layer (e.g., HTTP routes, data transfer objects)
 │   ├── domain/        # Domain business logic (domain and application layers)
