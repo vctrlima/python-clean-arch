@@ -1,6 +1,6 @@
 from sqlalchemy import Column, UUID, String
 from sqlalchemy.ext.declarative import declarative_base
-from src.domain.entities.user import User
+from domain.entities.user import User
 import uuid
 
 Base = declarative_base()

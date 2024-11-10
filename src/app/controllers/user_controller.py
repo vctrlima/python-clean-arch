@@ -1,18 +1,18 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, Body, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.domain.use_cases.create_user import CreateUser
-from src.domain.use_cases.get_all_users import GetAllUsers
-from src.domain.use_cases.get_user_by_id import GetUserById
-from src.domain.use_cases.update_user import UpdateUser
-from src.domain.use_cases.delete_user_by_id import DeleteUserById
-from src.app.data_transfer_objects.user_request_dto import UserRequestDTO
-from src.app.services.create_user_service import CreateUserService
-from src.app.services.get_all_users_service import GetAllUsersService
-from src.app.services.get_user_by_id_service import GetUserByIdService
-from src.app.services.update_user_service import UpdateUserService
-from src.app.services.delete_user_by_id_service import DeleteUserByIdService
-from src.infra.persistence.adapters.db_connection import get_db
+from domain.use_cases.create_user import CreateUser
+from domain.use_cases.get_all_users import GetAllUsers
+from domain.use_cases.get_user_by_id import GetUserById
+from domain.use_cases.update_user import UpdateUser
+from domain.use_cases.delete_user_by_id import DeleteUserById
+from app.data_transfer_objects.user_request_dto import UserRequestDTO
+from app.services.create_user_service import CreateUserService
+from app.services.get_all_users_service import GetAllUsersService
+from app.services.get_user_by_id_service import GetUserByIdService
+from app.services.update_user_service import UpdateUserService
+from app.services.delete_user_by_id_service import DeleteUserByIdService
+from infra.persistence.adapters.db_connection import get_db
 
 router = APIRouter()
 

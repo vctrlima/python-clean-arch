@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from src.infra.persistence.adapters.db_connection import init_db
-from src.app.controllers import user_controller
+from infra.persistence.adapters.db_connection import init_db
+from app.controllers import user_controller
 
 app = FastAPI()
 

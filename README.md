@@ -69,12 +69,14 @@ Create a `.env` file in the root of your project with the following content:
 
 ```plaintext
 DATABASE_URL=postgresql+asyncpg://<username>:<password>@<host>:<port>/<database_name>
+PYTHONPATH=./src
 ```
 
 Replace `<username>`, `<password>`, `<host>`, `<port>`, and `<database_name>` with your PostgreSQL credentials. Here is an example configuration:
 
 ```plaintext
 DATABASE_URL=postgresql+asyncpg://postgres:admin@localhost:5432/python-clean-arch
+PYTHONPATH=./src
 ```
 
 In this example:

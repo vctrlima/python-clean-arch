@@ -3,13 +3,13 @@ from typing import Callable
 from uuid import UUID
 from sqlalchemy import asc, desc, select, func
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.domain.entities.user import User
-from src.domain.use_cases.create_user import CreateUser
-from src.domain.use_cases.get_all_users import GetAllUsers
-from src.domain.use_cases.get_user_by_id import GetUserById
-from src.domain.models.pageable_model import Pageable
-from src.infra.encryption.password_encryption import PasswordEncryption
-from src.infra.persistence.models.user_model import UserModel
+from domain.entities.user import User
+from domain.use_cases.create_user import CreateUser
+from domain.use_cases.get_all_users import GetAllUsers
+from domain.use_cases.get_user_by_id import GetUserById
+from domain.models.pageable_model import Pageable
+from infra.encryption.password_encryption import PasswordEncryption
+from infra.persistence.models.user_model import UserModel
 
 logging.basicConfig(level=logging.INFO)
 

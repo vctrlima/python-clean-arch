@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from uuid import UUID
-from src.domain.entities.user import User
+from domain.entities.user import User
 
 class GetUserById:
     @abstractmethod

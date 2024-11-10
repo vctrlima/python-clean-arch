@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
-from src.domain.entities.user import User
+from domain.entities.user import User
 
 class UserRequestDTO(BaseModel):
     id: Optional[str] = ""
