@@ -43,12 +43,12 @@ class UserRepository(CreateUser, GetAllUsers, GetUserById):
         routine = await db.execute(query)
         users = [
             User(id=user.id, name=user.name, email=user.email, password=None)
-            for user in await routine.scalars().all()
+            for user in routine.scalars().all()
         ]
         total_elements_query = await db.execute(
             select(func.count()).select_from(UserModel)
         )
-        total_elements = await total_elements_query.scalar()
+        total_elements = total_elements_query.scalar()
         return Pageable.create(
             content=users,
             limit=limit,
