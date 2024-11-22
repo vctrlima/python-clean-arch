@@ -25,7 +25,7 @@ python-clean-arch/
 │   ├── app/           # Presentation layer (e.g., HTTP routes, data transfer objects)
 │   ├── domain/        # Domain business logic (domain and application layers)
 │   ├── infra/         # Infrastructure layer (e.g., database, external services)
-│   └── tests/         # Unit tests
+├── tests/         # Unit tests
 │
 ├── requirements.txt   # Python dependencies
 └── README.md          # Base project documentation
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 4. Run the FastAPI application:
 
 ```bash
-uvicorn src.__main__:api --reload
+uvicorn src.main:api --reload
 ```
 
 ## Database Configuration
