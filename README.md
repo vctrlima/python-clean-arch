@@ -25,7 +25,7 @@ python-clean-arch/
 │   ├── app/           # Presentation layer (e.g., HTTP routes, data transfer objects)
 │   ├── domain/        # Domain business logic (domain and application layers)
 │   ├── infra/         # Infrastructure layer (e.g., database, external services)
-├── tests/         # Unit tests
+├── tests/             # Unit tests
 │
 ├── requirements.txt   # Python dependencies
 └── README.md          # Base project documentation
