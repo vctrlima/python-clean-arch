@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch
 from uuid import uuid4
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from domain.entities.user import User
 from domain.models.pageable_model import Pageable
@@ -66,6 +67,17 @@ async def test_get_user_by_id(user_repository, mock_db, sample_user_model):
     assert result.id == sample_user_model.id
     assert result.name == sample_user_model.name
     assert result.email == sample_user_model.email
+
+
+@pytest.mark.asyncio
+async def test_get_user_by_email_not_found(user_repository, mock_db):
+    mock_execute_result = AsyncMock()
+    mock_execute_result.scalar_one_or_none.return_value = None
+    mock_db.execute = AsyncMock(return_value=mock_execute_result)
+
+    result = await user_repository.get_by_email("notfound@example.com", mock_db)
+
+    assert result is None
 
 
 @pytest.mark.asyncio

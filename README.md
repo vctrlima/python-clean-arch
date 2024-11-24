@@ -61,7 +61,7 @@ uvicorn src.main:api --reload
 
 ## Database Configuration
 
-To run the application with SQLAlchemy, you need to configure a database connection. The application uses PostgreSQL, and the connection string is defined in the `.env` file under the `DATABASE_URL` variable. 
+To run the application with SQLAlchemy, you need to configure a database connection. The application uses PostgreSQL, and the connection string is defined in the `.env` file under the `DATABASE_URL` variable.
 
 ### Setting Up the `.env` File
 
@@ -69,6 +69,7 @@ Create a `.env` file in the root of your project with the following content:
 
 ```plaintext
 DATABASE_URL=postgresql+asyncpg://<username>:<password>@<host>:<port>/<database_name>
+JWT_SECRET=<auth_token_secret>
 PYTHONPATH=./src
 ```
 
@@ -76,15 +77,18 @@ Replace `<username>`, `<password>`, `<host>`, `<port>`, and `<database_name>` wi
 
 ```plaintext
 DATABASE_URL=postgresql+asyncpg://postgres:admin@localhost:5432/python-clean-arch
+JWT_SECRET=652e5f1b698b25b3fccf83fb5[...]
 PYTHONPATH=./src
 ```
 
 In this example:
+
 - `postgres` is the username.
 - `admin` is the password.
 - `localhost` is the host.
 - `5432` is the port.
 - `python-clean-arch` is the database name.
+- `652e5f1b698b25b3fccf83fb5[...]` is a secret to generate your json web tokens.
 
 ### Creating the Database
 

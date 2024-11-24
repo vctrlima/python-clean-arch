@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from infra.persistence.adapters.db_connection import init_db
-from app.controllers import user_controller
+from app.controllers import user_controller, authentication_controller
 
 app = FastAPI()
 
@@ -14,3 +14,4 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(user_controller.router)
+app.include_router(authentication_controller.router)

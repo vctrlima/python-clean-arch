@@ -4,17 +4,22 @@ from uuid import UUID
 from sqlalchemy import asc, desc, select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from domain.entities.user import User
+from domain.use_cases.authenticate_user import AuthenticateUser
 from domain.use_cases.create_user import CreateUser
+from domain.use_cases.delete_user_by_id import DeleteUserById
 from domain.use_cases.get_all_users import GetAllUsers
 from domain.use_cases.get_user_by_id import GetUserById
 from domain.models.pageable_model import Pageable
+from domain.use_cases.update_user import UpdateUser
 from infra.encryption.password_encryption import PasswordEncryption
 from infra.persistence.models.user_model import UserModel
 
 logging.basicConfig(level=logging.INFO)
 
 
-class UserRepository(CreateUser, GetAllUsers, GetUserById):
+class UserRepository(
+    CreateUser, GetAllUsers, GetUserById, UpdateUser, DeleteUserById, AuthenticateUser
+):
     _logger = logging.getLogger(__name__)
 
     async def create(self, user: User, db: AsyncSession) -> User:
@@ -67,6 +72,22 @@ class UserRepository(CreateUser, GetAllUsers, GetUserById):
                 name=found_user.name,
                 email=found_user.email,
                 password=None,
+            )
+        except Exception as e:
+            self._logger.exception(e)
+            return None
+
+    async def get_by_email(self, email: str, db: AsyncSession) -> User:
+        try:
+            statement = select(UserModel).where(UserModel.email == email)
+            found_user = (await db.execute(statement)).scalar_one_or_none()
+            if not found_user:
+                raise Exception(f"User with email {email} not found!")
+            return User(
+                id=found_user.id,
+                name=found_user.name,
+                email=found_user.email,
+                password=found_user.password,
             )
         except Exception as e:
             self._logger.exception(e)
