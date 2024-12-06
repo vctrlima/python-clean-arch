@@ -15,7 +15,8 @@ def test_authentication_response_dto_custom_values():
     )
     credentials = Credentials(
         timestamp=datetime.now(),
-        token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwMGUxNTBlLTg5YWUtNDk4NS1hOTU5LTg5MmYyYWIxYzA5YSIsIm5hbWUiOiJWaWN0b3IgQ2FyZG9zbyBMaW1hIiwiZW1haWwiOiJ2aWN0b3IubGltYUBlbWFpbCJ9.-4q1O2tyFfyXMvDQ2ompdmYohQlgYkU5T9blsQmkjhk",
+        accessToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwMGUxNTBlLTg5YWUtNDk4NS1hOTU5LTg5MmYyYWIxYzA5YSIsIm5hbWUiOiJWaWN0b3IgQ2FyZG9zbyBMaW1hIiwiZW1haWwiOiJ2aWN0b3IubGltYUBlbWFpbCJ9.-4q1O2tyFfyXMvDQ2ompdmYohQlgYkU5T9blsQmkjhk",
+        refreshToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwMGUxNTBlLTg5YWUtNDk4NS1hOTU5LTg5MmYyYWIxYzA5YSIsImV4cCI6MTczMzA1NDA0NX0.JCPClwQv7ocPdm-Lu1CJmlsAJVkIN_W0vN_68Db_Ssw",
     )
 
     authentication_response_dto = AuthenticationResponseDTO(

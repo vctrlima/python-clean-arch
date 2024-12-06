@@ -1,14 +1,14 @@
-from datetime import datetime, timedelta
+import uuid
 from fastapi import Depends
+from datetime import datetime, timezone
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.data_transfer_objects.user_response_dto import UserResponseDTO
+from domain.models.credentials_model import Credentials
+from domain.use_cases.refresh_token import RefreshToken
 from app.data_transfer_objects.authentication_response_dto import (
     AuthenticationResponseDTO,
 )
-from app.data_transfer_objects.user_response_dto import UserResponseDTO
-from domain.models.credentials_model import Credentials
-from domain.use_cases.authenticate_user import AuthenticateUser
 from infra.authorization.token_authorization import TokenAuthorization
-from infra.encryption.password_encryption import PasswordEncryption
 from infra.persistence.adapters.db_connection import get_db
 from infra.persistence.models.refresh_token_model import RefreshTokenModel
 from infra.persistence.repositories.refresh_token_repository import (
@@ -17,7 +17,7 @@ from infra.persistence.repositories.refresh_token_repository import (
 from infra.persistence.repositories.user_repository import UserRepository
 
 
-class AuthenticateUserService(AuthenticateUser):
+class RefreshTokenService(RefreshToken):
     def __init__(
         self,
         user_repository: UserRepository = Depends(UserRepository),
@@ -28,15 +28,21 @@ class AuthenticateUserService(AuthenticateUser):
         self.user_repository = user_repository
         self.refresh_token_repository = refresh_token_repository
 
-    async def authenticate(
-        self, email: str, password: str, db: AsyncSession = Depends(get_db)
+    async def refresh(
+        self, refresh_token: str, db: AsyncSession = Depends(get_db)
     ) -> AuthenticationResponseDTO:
-        user = await self.user_repository.get_by_email(email, db)
+        saved_refresh_token = await self.refresh_token_repository.get_by_hashed_token(
+            refresh_token, db
+        )
+        if not saved_refresh_token:
+            raise Exception("Invalid refresh token hash")
+        decoded_token = TokenAuthorization.decode(saved_refresh_token.hashed_token)
+        if datetime.now(timezone.utc).timestamp() > decoded_token["exp"]:
+            raise Exception("Refresh token expired")
+        user_id = uuid.UUID(str(decoded_token["id"]))
+        user = await self.user_repository.get_by_id(user_id, db)
         if not user:
-            raise Exception("User not found")
-        password_is_valid = PasswordEncryption.verify(password, hash=user.password)
-        if not password_is_valid:
-            raise Exception("Invalid password")
+            raise Exception("Invalid user read from refresh token")
         user_dto = UserResponseDTO.model_validate(user)
         access_token = TokenAuthorization.generate_access_token(user_dto=user_dto)
         refresh_token = TokenAuthorization.generate_refresh_token(user_dto=user_dto)

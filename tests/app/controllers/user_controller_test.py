@@ -7,6 +7,7 @@ from app.services.delete_user_by_id_service import DeleteUserByIdService
 from app.services.get_all_users_service import GetAllUsersService
 from app.services.get_user_by_id_service import GetUserByIdService
 from app.services.update_user_service import UpdateUserService
+from infra.authorization.jwt_bearer import JWTBearer
 from infra.persistence.adapters.db_connection import get_db
 from main import app
 
@@ -14,6 +15,12 @@ from main import app
 @pytest.fixture
 def mock_db():
     return MagicMock()
+
+
+@pytest.fixture
+class MockJWTBearer:
+    async def __call__(self, request):
+        return "mocked_token"
 
 
 @pytest.fixture
@@ -66,6 +73,7 @@ def mock_delete_user_by_id_use_case():
     return mock
 
 
+@pytest.mark.asyncio
 def test_create_user_returns_201_when_successful(mock_create_user_use_case, mock_db):
     app.dependency_overrides = {
         CreateUserService: lambda: mock_create_user_use_case,
@@ -84,8 +92,10 @@ def test_create_user_returns_201_when_successful(mock_create_user_use_case, mock
     }
 
 
+@pytest.mark.asyncio
 def test_get_all_users_returns_list_of_users(mock_get_all_users_use_case, mock_db):
     app.dependency_overrides = {
+        JWTBearer: lambda: MockJWTBearer(),
         GetAllUsersService: lambda: mock_get_all_users_use_case,
         get_db: lambda: mock_db,
     }
@@ -98,10 +108,12 @@ def test_get_all_users_returns_list_of_users(mock_get_all_users_use_case, mock_d
     assert response.json() == mock_get_all_users_use_case.get_all.return_value
 
 
+@pytest.mark.asyncio
 def test_get_user_by_id_returns_user_when_id_exists(
     mock_get_user_by_id_use_case, mock_db
 ):
     app.dependency_overrides = {
+        JWTBearer: lambda: MockJWTBearer(),
         GetUserByIdService: lambda: mock_get_user_by_id_use_case,
         get_db: lambda: mock_db,
     }
@@ -114,10 +126,12 @@ def test_get_user_by_id_returns_user_when_id_exists(
     assert response.json() == mock_get_user_by_id_use_case.get_by_id.return_value
 
 
+@pytest.mark.asyncio
 def test_update_user_returns_updated_user_when_successful(
     mock_update_user_use_case, mock_db
 ):
     app.dependency_overrides = {
+        JWTBearer: lambda: MockJWTBearer(),
         UpdateUserService: lambda: mock_update_user_use_case,
         get_db: lambda: mock_db,
     }
@@ -131,10 +145,12 @@ def test_update_user_returns_updated_user_when_successful(
     assert response.json() == mock_update_user_use_case.update.return_value
 
 
+@pytest.mark.asyncio
 def test_delete_user_by_id_returns_204_when_successful(
     mock_delete_user_by_id_use_case, mock_db
 ):
     app.dependency_overrides = {
+        JWTBearer: lambda: MockJWTBearer(),
         DeleteUserByIdService: lambda: mock_delete_user_by_id_use_case,
         get_db: lambda: mock_db,
     }

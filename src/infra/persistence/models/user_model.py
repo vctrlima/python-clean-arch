@@ -1,7 +1,7 @@
+import uuid
 from sqlalchemy import Column, UUID, String
 from sqlalchemy.ext.declarative import declarative_base
 from domain.entities.user import User
-import uuid
 
 Base = declarative_base()
 

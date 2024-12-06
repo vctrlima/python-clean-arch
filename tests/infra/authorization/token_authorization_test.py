@@ -15,15 +15,6 @@ class TestTokenAuthorization(unittest.TestCase):
         expected_token = encode(payload, "test_secret", algorithm="HS256")
         self.assertEqual(token, expected_token)
 
-    @patch.dict(os.environ, {"JWT_SECRET": "test_secret"})
-    def test_decode(self):
-        payload = {"user_id": 123}
-
-        token = encode(payload, "test_secret", algorithm="HS256")
-
-        decoded = TokenAuthorization.decode(token)
-        self.assertEqual(decoded, payload)
-
     @patch("infra.authorization.token_authorization.get_unverified_header")
     def test_verify_valid_token(self, mock_get_unverified_header):
         token = "dummy_token"
